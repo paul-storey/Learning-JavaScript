@@ -1,0 +1,34 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Tabs</title></head>
+<body>
+<ul class="tab" data-tabname="starters"><li>Avocado</li></ul>
+<ul class="tab" data-tabname="mains"><li>Steak</li></ul>
+<ul class="tab" data-tabname="pudding"><li>Chocolate Cake</li></ul>
+<script>
+
+var asTabs = function(parentNode) {
+  var tabPages = parentNode.querySelectorAll(".tab");
+  var tabControls = [];
+  var updateTabs = function(tabName) {
+    for ( var i = 0; i < tabPages.length; ++i ) {
+      tabPages[i].style.display = (tabPages[i].getAttribute("data-tabname") == tabName) ? "block" : "none";    
+    }
+  };
+  for ( var pageIndex = 0; pageIndex < tabPages.length; pageIndex++ ) {
+    var tabControl = document.createElement("button");
+    var tabName = tabPages[pageIndex].getAttribute("data-tabname");
+    tabControl.appendChild(document.createTextNode(tabName));
+    tabControls.push(tabControl);
+    tabControl.addEventListener("click", function() { var tn = tabName; return function() { updateTabs(tn); }; }());
+  }
+  var topNode = parentNode.childNodes[0];
+  tabControls.forEach( function(ctl) { document.body.insertBefore(ctl, topNode); } );
+  updateTabs(tabPages[0].getAttribute("data-tabname"));  
+};
+
+asTabs(document.body);
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Title</title></head>
+<body><h1>Heading</h1>
+<input type="text"/>
+<script>
+var inp = document.querySelector("input");
+var blocked = "QWX"; 
+inp.addEventListener("keydown", function(event) {
+  var s = String.fromCharCode(event.keyCode).toLocaleUpperCase();
+  if (blocked.includes(s)) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log("Blocking " + s);
+  }
+});
+</script>
+</body>
+</html>

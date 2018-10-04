@@ -1,0 +1,28 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Mouse Trail</title></head>
+<body><h1>Heading</h1>
+<style>
+  body {
+    height: 200px;
+    background: beige;
+  }
+  .dot {
+    height: 8px; width: 8px;
+    border-radius: 4px; /*rounds corners*/
+    background: blue;
+    position: absolute;
+  }  
+</style>
+<script>
+addEventListener("mousemove", function(event) {
+  var dot = document.createElement("div");
+  dot.className = "dot";
+  dot.style.left = (event.pageX - 4) + "px";
+  dot.style.top = (event.pageY - 4) + "px";
+  document.body.appendChild(dot);
+});
+</script>
+</body>
+</html>

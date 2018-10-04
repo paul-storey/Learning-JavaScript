@@ -1,0 +1,35 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Mouse Trail</title></head>
+<body><h1>Heading</h1>
+<style>
+  body {
+    height: 200px;
+    background: beige;
+  }
+  .dot {
+    height: 8px; width: 8px;
+    border-radius: 4px; /*rounds corners*/
+    background: blue;
+    position: absolute;
+  }  
+</style>
+<script>
+var dotArray = [];
+addEventListener("mousemove", function(event) {
+  if (dotArray.length < 10)
+  {
+    var dot = document.createElement("div");
+    dot.className = "dot";
+    document.body.appendChild(dot);
+    dotArray.push(dot);
+  }
+  var nextDot = dotArray.pop();
+  dotArray.unshift(nextDot);
+  nextDot.style.left = (event.pageX - 4) + "px";
+  nextDot.style.top = (event.pageY - 4) + "px";
+});
+</script>
+</body>
+</html>
