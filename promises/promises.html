@@ -1,0 +1,64 @@
+<html>
+<!--
+Simple demo of stringing together Promises.
+Note how, in the chain of Promises, some have success handlers which 
+return a simple value, others have success handlers which return a
+new Promise.
+In this way it is possible to chain together a sequence of actions
+without having to care that some of them are synchronous and some 
+asynchronous.
+-->
+<head></head>
+<body>
+<div></div>
+<script>
+  // Calls the 'interested' function with 'value' as an argument,
+  // but calls this function asynchronously.
+  var valueAfterDelay = function(value, interested) {
+    setTimeout(function() { interested(value); }, 1000);
+  };
+
+  // Updates the text node under the <div>
+  var updateDiv = function(text) {
+    var div = document.querySelector("div");
+    for (var child; child = div.firstChild;) {
+      div.removeChild(child);
+    }
+    div.appendChild(document.createTextNode(text));
+  };
+
+  // Returns a Promise of which the successful outcome
+  // is the specified value.
+  var getAsync = function(value) {
+    return new Promise(
+      function(succeed, fail) {
+        valueAfterDelay(value, function(value) { succeed(value); });
+      }
+    );
+  };
+
+  (function() {
+    getAsync("Hi Paul")
+    .then(
+      function(v){
+        return v + ". How are you?";
+      }
+    ).then(
+      function(v){
+        return getAsync(v + " Not so bad!");
+      }
+    ).then(
+      function(v){
+        updateDiv(v);
+        //throw new Error("Oh dear!");
+      }
+    ).catch(
+      function(e){
+        updateDiv(e)
+      }
+    );
+  }())
+</script>
+</body>
+</html>
+
